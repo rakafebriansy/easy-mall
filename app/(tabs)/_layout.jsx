@@ -12,23 +12,23 @@ const TabLayout = ({}) => {
       }}
     >
       <Tabs.Screen
-        name="Home"
+        name="home"
         options={{
-          tabBarLabel: "Home",
+          title: "Home",
           tabBarIcon: ({ color }) => <Ionicons name="home" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="Explore"
+        name="explore"
         options={{
-          tabBarLabel: "Explore",
+          title: "Explore",
           tabBarIcon: ({ color }) => <Ionicons name="search" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="Profile"
+        name="profile"
         options={{
-          tabBarLabel: "Profile",
+          title: "Profile",
           tabBarIcon: ({ color }) => <Ionicons name="people" size={24} color={color} />,
         }}
       />
