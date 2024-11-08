@@ -1,11 +1,9 @@
 import { Text, View } from "react-native";
+import Header from "../../components/partials/home/header";
 const Home = ({  }) => {
     return (
         <View>
-            <Text style={{
-                fontSize: 40,
-                fontFamily: 'outfit-bold'
-            }}>Home</Text>
+            <Header/>
         </View>
     );
 };
