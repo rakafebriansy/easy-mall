@@ -9,5 +9,6 @@ const tintColorDark = '#fff';
 export const Colors = {
   PRIMARY: '#1CB0F6',
   SECONDARY: '#DDF4FF',
-  GRAY: '#8F8F8F'
+  GRAY: '#8F8F8F',
+  FETCHING: '#E7E7E7'
 };

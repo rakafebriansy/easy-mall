@@ -3,6 +3,7 @@ import { query, collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
+import { Colors } from "../../../../constants/Colors";
 
 const Slider = ({}) => {
   const [sliderList, setSliderList] = useState([]);
@@ -41,6 +42,7 @@ const Slider = ({}) => {
           horizontal={true}
           style={{
             paddingLeft: 20,
+            paddingRight: 20,
           }}
           showsHorizontalScrollIndicator={false}
           data={sliderList}
@@ -68,22 +70,17 @@ const Slider = ({}) => {
             paddingLeft: 20,
           }}
         >
-          <View
-            style={{
-              borderRadius: 15,
-              width: 300,
-              height: 150,
-              backgroundColor: "#E7E7E7",
-            }}
-          ></View>
-          <View
-            style={{
-              borderRadius: 15,
-              width: 300,
-              height: 150,
-              backgroundColor: "#E7E7E7",
-            }}
-          ></View>
+          {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
+            <View
+              key={i}
+              style={{
+                borderRadius: 15,
+                width: 300,
+                height: 150,
+                backgroundColor: Colors.FETCHING,
+              }}
+            ></View>
+          ))}
         </View>
       )}
     </View>
