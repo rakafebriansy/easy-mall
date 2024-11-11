@@ -1,25 +1,26 @@
 import { Text, View } from "react-native";
 import { Colors } from "../../../../constants/Colors";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 import { db } from "../../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import CategoryCard from "../../../elements/Cards/CategoryCard";
+import PopularProductCard from "../../../elements/Cards/PopularProductCard";
 
-const Category = ({}) => {
-  const [categoriesList, setCategoriesList] = useState([]);
+const PopularProducts = ({}) => {
+  const [productsList, setProductsList] = useState([]);
 
-  const fetchCategoriesList = async () => {
-    setCategoriesList([]);
-    const q = query(collection(db, "category"));
+  const fetchProductsList = async () => {
+    setProductsList([]);
+    const q = query(collection(db, "product-list"), limit(10));
     const querySnapshot = await getDocs(q);
+
     querySnapshot.forEach((doc) => {
-      setCategoriesList((prev) => [...prev, doc.data()]);
+      setProductsList((prev) => [...prev, doc.data()]);
     });
   };
 
   useEffect(() => {
-    fetchCategoriesList();
+    fetchProductsList();
   }, []);
 
   return (
@@ -42,7 +43,7 @@ const Category = ({}) => {
             fontFamily: "outfit-bold",
           }}
         >
-          Category
+          Popular Products
         </Text>
         <Text
           style={{
@@ -54,13 +55,8 @@ const Category = ({}) => {
         </Text>
       </View>
 
-      {categoriesList.length > 0 ? (
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          data={categoriesList}
-          renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={(category) => console.log(category.name)} />}
-        />
+      {productsList.length > 0 ? (
+        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={productsList} renderItem={({ item, index }) => <PopularProductCard product={item} key={index} index={index} />} />
       ) : (
         <View
           style={{
@@ -68,15 +64,15 @@ const Category = ({}) => {
             gap: 20,
           }}
         >
-          {Array.from({ length: 5 }, (_, i) => i + 1).map((i) => (
+          {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
             <View
               key={i}
               style={{
-                width: 70,
-                height: 70,
+                alignItems: "center",
+                width: 220,
+                height: 195,
                 backgroundColor: Colors.FETCHING,
-                borderRadius: 99,
-                gap: 5,
+                borderRadius: 15,
               }}
             />
           ))}
@@ -85,4 +81,4 @@ const Category = ({}) => {
     </View>
   );
 };
-export default Category;
+export default PopularProducts;
