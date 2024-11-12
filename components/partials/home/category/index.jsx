@@ -1,21 +1,28 @@
-import { Text, View } from "react-native";
+import { Text, ToastAndroid, View } from "react-native";
 import { Colors } from "../../../../constants/Colors";
 import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "../../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import CategoryCard from "../../../elements/Cards/CategoryCard";
+import { useRouter } from "expo-router";
 
 const Category = ({}) => {
   const [categoriesList, setCategoriesList] = useState([]);
+  const router = useRouter();
 
   const fetchCategoriesList = async () => {
-    setCategoriesList([]);
-    const q = query(collection(db, "category"));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      setCategoriesList((prev) => [...prev, doc.data()]);
-    });
+    try {
+      setCategoriesList([]);
+      const q = query(collection(db, "category"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setCategoriesList((prev) => [...prev, doc.data()]);
+      });
+    } catch (err) {
+      console.error(err);
+      ToastAndroid.show('Error while fetching list of categories',ToastAndroid.SHORT);
+    }
   };
 
   useEffect(() => {
@@ -59,7 +66,7 @@ const Category = ({}) => {
           showsHorizontalScrollIndicator={false}
           horizontal={true}
           data={categoriesList}
-          renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={(category) => console.log(category.name)} />}
+          renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={(category) => router.push(`/product-list/${category.name}`)} />}
         />
       ) : (
         <View

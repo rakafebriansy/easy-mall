@@ -2,9 +2,8 @@ import { ClerkProvider, ClerkLoaded, SignedIn, SignedOut } from "@clerk/clerk-ex
 import { useFonts } from "expo-font";
 import * as SecureStore from 'expo-secure-store'
 import { Stack } from "expo-router";
-import { Image, Text,View } from "react-native";
 import LoginScreen from "./login";
-import Loading from "../components/elements/Utilities/Loading";
+import LoadingScreen from "../components/partials/loading-screen";
 
 export default function RootLayout() {
   
@@ -47,13 +46,7 @@ export default function RootLayout() {
 
   if(!fontsLoaded) {
     return (
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <Loading />
-      </View>
+      <LoadingScreen />
     );
   }
 

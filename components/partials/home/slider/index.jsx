@@ -18,7 +18,7 @@ const Slider = ({}) => {
       });
     } catch (error) {
       console.error(error);
-      ToastAndroid.show("Error while fetching data!", ToastAndroid.SHORT);
+      ToastAndroid.show("Error while fetching banners!", ToastAndroid.SHORT);
     }
   };
 
@@ -40,10 +40,6 @@ const Slider = ({}) => {
       {sliderList.length > 0 ? (
         <FlatList
           horizontal={true}
-          style={{
-            paddingLeft: 20,
-            paddingRight: 20,
-          }}
           showsHorizontalScrollIndicator={false}
           data={sliderList}
           renderItem={({ item, index }) => (
@@ -53,10 +49,11 @@ const Slider = ({}) => {
               }}
               resizeMode="stretch"
               style={{
+                marginLeft: index === 0 ? 20 : 0,
+                marginRight: 20,
                 borderRadius: 15,
                 width: 300,
                 height: 150,
-                marginRight: 15,
               }}
             />
           )}
@@ -66,7 +63,7 @@ const Slider = ({}) => {
           style={{
             flexDirection: "row",
             overflow: "hidden",
-            gap: 15,
+            gap: 20,
             paddingLeft: 20,
           }}
         >

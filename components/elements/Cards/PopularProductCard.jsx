@@ -5,7 +5,8 @@ const PopularProductCard = ({ product, index }) => {
     <View
       style={{
         alignItems: "center",
-        marginLeft: index === 0 ? 0 : 20,
+        marginLeft: index === 0 ? 20 : 0,
+        marginRight: 20,
         padding: 10,
         backgroundColor: "white",
         borderRadius: 15,

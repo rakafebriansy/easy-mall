@@ -10,13 +10,18 @@ const PopularProducts = ({}) => {
   const [productsList, setProductsList] = useState([]);
 
   const fetchProductsList = async () => {
-    setProductsList([]);
-    const q = query(collection(db, "product-list"), limit(10));
-    const querySnapshot = await getDocs(q);
+    try {
+      setProductsList([]);
+      const q = query(collection(db, "product-list"), limit(10));
+      const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      setProductsList((prev) => [...prev, doc.data()]);
-    });
+      querySnapshot.forEach((doc) => {
+        setProductsList((prev) => [...prev, doc.data()]);
+      });
+    } catch (err) {
+      console.error(err);
+      ToastAndroid.show("Error while fetching list of popular products", ToastAndroid.SHORT);
+    }
   };
 
   useEffect(() => {
@@ -26,7 +31,6 @@ const PopularProducts = ({}) => {
   return (
     <View
       style={{
-        paddingHorizontal: 20,
         marginTop: 20,
         gap: 10,
       }}
@@ -35,6 +39,7 @@ const PopularProducts = ({}) => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
+          paddingHorizontal: 20
         }}
       >
         <Text
@@ -62,6 +67,7 @@ const PopularProducts = ({}) => {
           style={{
             flexDirection: "row",
             gap: 20,
+            paddingHorizontal: 20
           }}
         >
           {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
