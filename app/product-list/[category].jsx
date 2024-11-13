@@ -29,6 +29,11 @@ const ProductListByCategory = ({}) => {
     }
   };
 
+  const refreshProduct = () => {
+    setIsFecthing(true);
+    fetchProductList();
+  }
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -43,7 +48,7 @@ const ProductListByCategory = ({}) => {
         <LoadingScreen />
       ) : productsList.length > 0 ? (
         <View>
-          <FlatList data={productsList} renderItem={({ item, index }) => <ProductListCard product={item} key={index} />} />
+          <FlatList onRefresh={refreshProduct} refreshing={isFetching} data={productsList} renderItem={({ item, index }) => <ProductListCard product={item} key={index} />} />
         </View>
       ) : (
         <View
