@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 import { Rating } from "react-native-ratings";
 import { Colors } from "../../../../constants/Colors";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../../../config/FirebaseConfig";
+import { arrayUnion } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
+import { updateRecord } from "../../../../services";
 
 const Review = ({ product, refresh }) => {
   const [rating, setRating] = useState(0);
@@ -13,8 +13,7 @@ const Review = ({ product, refresh }) => {
 
   const onSubmitComment = async () => {
     try {
-      const docRef = doc(db, "product-list", product.id);
-      await updateDoc(docRef, {
+      await updateRecord("product-list", product.id, {
         reviews: arrayUnion({
           rating: rating,
           comment: comment,
@@ -26,7 +25,7 @@ const Review = ({ product, refresh }) => {
       ToastAndroid.show("Comment Added Successfully", ToastAndroid.LONG);
       refresh();
     } catch (err) {
-      console.error();
+      console.error(err);
       ToastAndroid.show("Error while updating product", ToastAndroid.SHORT);
     }
   };

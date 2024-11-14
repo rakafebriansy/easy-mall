@@ -1,7 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView } from "react-native";
-import { db } from "../../config/FirebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Loading from "../../components/partials/loading";
 import Intro from "../../components/partials/product-detail/intro";
@@ -11,21 +9,20 @@ import { View } from "react-native";
 import Review from "../../components/partials/product-detail/review";
 import ProductReviews from "../../components/partials/product-detail/product-reviews";
 import TopBar from "../../components/partials/product-detail/top-bar";
+import { getRecordById } from "../../services";
 
 const ProductDetail = ({}) => {
   const { productid } = useLocalSearchParams();
   const [productDetail, setProductDetail] = useState({});
   const [isFetching, setIsFecthing] = useState(true);
-  const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchProductDetailById = async (productId) => {
     try {
-      const docRef = doc(db, "product-list", productId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setProductDetail({ id: docSnap.id, ...docSnap.data() });
+      const data = await getRecordById("product-list", productId);
+      if (data) {
+        setProductDetail(data);
       } else {
-        console.log("No data");
+        console.info("No data");
       }
       setIsFecthing(false);
     } catch (err) {

@@ -1,23 +1,18 @@
 import { Image, Text, ToastAndroid, View } from "react-native";
-import { query, collection, getDocs } from "firebase/firestore";
-import { db } from "../../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { Colors } from "../../../../constants/Colors";
+import { getRecords } from "../../../../services";
 
 const Slider = ({}) => {
   const [sliderList, setSliderList] = useState([]);
 
   const fetchSliderList = async () => {
     try {
-      setSliderList([]);
-      const q = query(collection(db, "slider"));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setSliderList((prev) => [...prev, doc.data()]);
-      });
-    } catch (error) {
-      console.error(error);
+      const data = await getRecords('slider');
+      setSliderList(data);
+    } catch (err) {
+      console.err(err);
       ToastAndroid.show("Error while fetching banners!", ToastAndroid.SHORT);
     }
   };

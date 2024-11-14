@@ -1,22 +1,17 @@
 import { Text, ToastAndroid, View } from "react-native";
 import { Colors } from "../../../constants/Colors";
-import { collection, getDocs, query } from "firebase/firestore";
-import { db } from "../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import CategoryCard from "../Card/CategoryCard";
+import { getRecords } from "../../../services";
 
 const Category = ({ screen, callback = () => {} }) => {
   const [categoriesList, setCategoriesList] = useState([]);
 
   const fetchCategoriesList = async () => {
     try {
-      setCategoriesList([]);
-      const q = query(collection(db, "category"));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setCategoriesList((prev) => [...prev, doc.data()]);
-      });
+      const data = await getRecords('category');
+      setCategoriesList(data);
     } catch (err) {
       console.error(err);
       ToastAndroid.show("Error while fetching list of categories", ToastAndroid.SHORT);

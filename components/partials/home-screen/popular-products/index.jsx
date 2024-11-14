@@ -1,23 +1,17 @@
 import { Text, View } from "react-native";
 import { Colors } from "../../../../constants/Colors";
-import { collection, getDocs, limit, query } from "firebase/firestore";
-import { db } from "../../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import PopularProductCard from "../../../elements/Card/PopularProductCard";
+import { getRecords } from "../../../../services";
 
 const PopularProducts = ({}) => {
   const [productsList, setProductsList] = useState([]);
 
   const fetchProductsList = async () => {
     try {
-      setProductsList([]);
-      const q = query(collection(db, "product-list"), limit(10));
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        setProductsList((prev) => [...prev, { id: doc.id, ...doc.data() }]);
-      });
+      const data = await getRecords('product-list', 10);
+      setProductsList(data);
     } catch (err) {
       console.error(err);
       ToastAndroid.show("Error while fetching list of popular products", ToastAndroid.SHORT);
