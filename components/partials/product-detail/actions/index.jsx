@@ -1,4 +1,4 @@
-import { Linking, TouchableOpacity } from "react-native";
+import { Linking, Share, TouchableOpacity } from "react-native";
 import { Image } from "react-native";
 import { FlatList, Text, View } from "react-native";
 const Actions = ({ product }) => {
@@ -25,12 +25,15 @@ const Actions = ({ product }) => {
       id: 4,
       name: "Share",
       icon: require("../../../../assets/images/share.png"),
-      url: product.website,
+      url: null,
     },
   ];
 
   const onPressHandler = (item) => {
-    if (item.name == "share") {
+    if (item.name == "Share") {
+      Share.share({
+        message: product.name + "\n Address: " + product.address + "\n Find more details on Easy Mall!",
+      });
       return;
     }
     Linking.openURL(item.url);
