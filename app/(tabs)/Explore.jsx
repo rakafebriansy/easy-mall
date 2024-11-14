@@ -1,15 +1,16 @@
-import { FlatList, Text, TextInput, View } from "react-native";
+import { Dimensions, FlatList, Text, TextInput, View } from "react-native";
 import CategoryList from "../../components/elements/List/CategoryList";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
-import { getRecordsByField } from "../../services";
+import { getRecords, getRecordsByField } from "../../services";
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/elements/Card/ProductCard";
-import { ScrollView } from "react-native";
+import NotFound from "../../components/elements/Utils/NotFound";
 
 const Explore = ({}) => {
   const [productsList, setProductsList] = useState([]);
   const [isFetching, setIsFecthing] = useState(true);
+  const height = Dimensions.get('window').height;
 
   const fetchProductsByCategory = async (categoryName) => {
     try {
@@ -22,10 +23,30 @@ const Explore = ({}) => {
     }
   };
 
-  const refresh = (category) => {
+  const fetchProducts = async () => {
+    try {
+      const data = await getRecords("product-list", 10);
+      setProductsList(data);
+      setIsFecthing(false);
+    } catch (err) {
+      console.log(err);
+      ToastAndroid.show("Error while fetching list of products", ToastAndroid.SHORT);
+    }
+  };
+
+  const refreshByCategory = (category) => {
     setIsFecthing(true);
     fetchProductsByCategory(category.name);
   };
+  const refresh = () => {
+    setIsFecthing(true);
+    fetchProducts();
+  };
+
+  useEffect(() => {
+    setIsFecthing(true);
+    fetchProducts();
+  }, []);
 
   return (
     <View
@@ -39,8 +60,8 @@ const Explore = ({}) => {
           padding: 20,
         }}
         showsVerticalScrollIndicator={false}
-        // onRefresh={refresh}
-        // refreshing={isFetching}
+        onRefresh={refresh}
+        refreshing={isFetching}
         data={productsList}
         ListHeaderComponent={
           <>
@@ -78,8 +99,15 @@ const Explore = ({}) => {
                 />
               </View>
             </View>
-            <CategoryList screen="explore" callback={refresh} />
+            <CategoryList screen="explore" callback={refreshByCategory} />
           </>
+        }
+        ListEmptyComponent={
+          <View style={{
+            height: height * 3/5
+          }}>
+            <NotFound>No Product Found</NotFound>
+          </View>
         }
         renderItem={({ item, index }) => (
           <View>

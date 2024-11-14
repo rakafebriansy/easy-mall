@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import * as SecureStore from 'expo-secure-store'
 import { Stack } from "expo-router";
 import LoginScreen from "./login";
-import Loading from "../components/partials/loading";
+import Loading from "../components/elements/Utils/Loading";
 
 export default function RootLayout() {
   

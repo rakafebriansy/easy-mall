@@ -2,10 +2,10 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import ProductListItem from "../../components/elements/ListItem/ProductListItem";
-import { Colors } from "../../constants/Colors";
 import { ToastAndroid } from "react-native";
-import Loading from "../../components/partials/loading";
+import Loading from "../../components/elements/Utils/Loading";
 import { getRecordsByField } from "../../services";
+import NotFound from "../../components/elements/Utils/NotFound";
 
 const ProductListByCategory = ({}) => {
   const navigation = useNavigation();
@@ -46,24 +46,7 @@ const ProductListByCategory = ({}) => {
           <FlatList onRefresh={refresh} refreshing={isFetching} data={productsList} renderItem={({ item, index }) => <ProductListItem product={item} key={index} />} />
         </View>
       ) : (
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "outfit-bold",
-              color: Colors.GRAY,
-              textAlign: "center",
-            }}
-          >
-            No Product Found
-          </Text>
-        </View>
+        <NotFound>No Product Found</NotFound>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView } from "react-native";
 import { useEffect, useState } from "react";
-import Loading from "../../components/partials/loading";
+import Loading from "../../components/elements/Utils/Loading";
 import Intro from "../../components/partials/product-detail/intro";
 import Actions from "../../components/partials/product-detail/actions";
 import About from "../../components/partials/product-detail/about";
