@@ -8,6 +8,8 @@ import Intro from "../../components/partials/product-detail/intro";
 import Actions from "../../components/partials/product-detail/actions";
 import About from "../../components/partials/product-detail/about";
 import { View } from "react-native";
+import Review from "../../components/partials/product-detail/review";
+import ProductReviews from "../../components/partials/product-detail/product-reviews";
 
 const ProductDetail = ({}) => {
   const { productid } = useLocalSearchParams();
@@ -19,7 +21,7 @@ const ProductDetail = ({}) => {
       const docRef = doc(db, "product-list", productId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setProductDetail(docSnap.data());
+        setProductDetail({id:docSnap.id, ... docSnap.data()});
       } else {
         console.log("No data");
       }
@@ -44,6 +46,8 @@ const ProductDetail = ({}) => {
             <Intro product={productDetail} />
             <Actions product={productDetail} />
             <About product={productDetail} />
+            <Review product={productDetail} />
+            <ProductReviews product={productDetail} />
           </View>
         </ScrollView>
       )}
