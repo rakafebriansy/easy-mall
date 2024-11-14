@@ -38,7 +38,9 @@ const Intro = ({ product }) => {
       />
       <View
         style={{
-          padding: 20,
+          paddingTop: 20,
+          paddingBottom: 10,
+          paddingHorizontal: 20,
           marginTop: -20,
           backgroundColor: "white",
           borderTopLeftRadius: 25,

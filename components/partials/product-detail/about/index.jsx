@@ -3,7 +3,8 @@ const About = ({ product }) => {
     return (
         <View style={{
             backgroundColor: 'white',
-            padding: 20,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
             flex: 1
         }}>
             <Text style={{
