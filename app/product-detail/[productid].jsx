@@ -34,7 +34,7 @@ const ProductDetail = ({}) => {
     }
   };
 
-  const refreshProduct = () => {
+  const refresh = () => {
     fetchProductDetailById(productid);
   };
 
@@ -54,7 +54,7 @@ const ProductDetail = ({}) => {
               <Intro product={productDetail} />
               <Actions product={productDetail} />
               <About product={productDetail} />
-              <Review product={productDetail} refreshProduct={refreshProduct} />
+              <Review product={productDetail} refresh={refresh} />
               <ProductReviews product={productDetail} />
             </View>
           </ScrollView>

@@ -54,7 +54,8 @@ const Header = ({}) => {
         <Ionicons name="search" size={24} color={ Colors.PRIMARY } />
         <TextInput placeholder="Search ..." style={{
             fontFamily: 'outfit',
-            fontSize: 16
+            fontSize: 16,
+            flex: 1,
         }} />
       </View>
     </View>

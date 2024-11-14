@@ -1,15 +1,13 @@
 import { Text, ToastAndroid, View } from "react-native";
-import { Colors } from "../../../../constants/Colors";
+import { Colors } from "../../../constants/Colors";
 import { collection, getDocs, query } from "firebase/firestore";
-import { db } from "../../../../config/FirebaseConfig";
+import { db } from "../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import CategoryCard from "../../../elements/Cards/CategoryCard";
-import { useRouter } from "expo-router";
+import CategoryCard from "../Card/CategoryCard";
 
-const Category = ({}) => {
+const Category = ({ screen, callback = () => {} }) => {
   const [categoriesList, setCategoriesList] = useState([]);
-  const router = useRouter();
 
   const fetchCategoriesList = async () => {
     try {
@@ -21,7 +19,7 @@ const Category = ({}) => {
       });
     } catch (err) {
       console.error(err);
-      ToastAndroid.show('Error while fetching list of categories',ToastAndroid.SHORT);
+      ToastAndroid.show("Error while fetching list of categories", ToastAndroid.SHORT);
     }
   };
 
@@ -32,42 +30,38 @@ const Category = ({}) => {
   return (
     <View
       style={{
-        paddingHorizontal: 20,
         marginTop: 20,
         gap: 10,
       }}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text
+      {screen == "home" && (
+        <View
           style={{
-            fontSize: 20,
-            fontFamily: "outfit-bold",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
-          Category
-        </Text>
-        <Text
-          style={{
-            color: Colors.PRIMARY,
-            fontFamily: "outfit-medium",
-          }}
-        >
-          View All
-        </Text>
-      </View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: "outfit-bold",
+            }}
+          >
+            Category
+          </Text>
+          <Text
+            style={{
+              color: Colors.PRIMARY,
+              fontFamily: "outfit-medium",
+            }}
+          >
+            View All
+          </Text>
+        </View>
+      )}
 
       {categoriesList.length > 0 ? (
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          data={categoriesList}
-          renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={(category) => router.push(`/product-list/${category.name}`)} />}
-        />
+        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={categoriesList} renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={() => callback(item)} />} />
       ) : (
         <View
           style={{

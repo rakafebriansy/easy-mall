@@ -1,33 +1,22 @@
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
-import ProductListCard from "../../components/elements/Cards/ProductListCard";
+import ProductListItem from "../../components/elements/ListItem/ProductListItem";
 import { Colors } from "../../constants/Colors";
 import { ToastAndroid } from "react-native";
-import { db } from "../../config/FirebaseConfig";
 import Loading from "../../components/partials/loading";
+import { getRecordsByField } from "../../services";
+
 const ProductListByCategory = ({}) => {
   const navigation = useNavigation();
   const { category } = useLocalSearchParams();
   const [productsList, setProductsList] = useState([]);
   const [isFetching, setIsFecthing] = useState(true);
 
-  const fetchProductListByCategory = async (categoryName) => {
+  const fetchProductsByCategory = async (categoryName) => {
     try {
-      setProductsList([]);
-      const q = query(collection(db, "product-list"), where("category", "==", categoryName));
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        setProductsList((prev) => [
-          ...prev,
-          {
-            id: doc.id,
-            ...doc.data(),
-          },
-        ]);
-      });
+      const data = await getRecordsByField('product-list','category','==',categoryName);
+      setProductsList(data);
       setIsFecthing(false);
     } catch (err) {
       console.log(err);
@@ -35,9 +24,9 @@ const ProductListByCategory = ({}) => {
     }
   };
 
-  const refreshProduct = () => {
+  const refresh = () => {
     setIsFecthing(true);
-    fetchProductListByCategory(category);
+    fetchProductsByCategory(category);
   };
 
   useEffect(() => {
@@ -45,7 +34,7 @@ const ProductListByCategory = ({}) => {
       headerShown: true,
       headerTitle: category,
     });
-    fetchProductListByCategory(category);
+    fetchProductsByCategory(category);
   }, []);
 
   return (
@@ -54,7 +43,7 @@ const ProductListByCategory = ({}) => {
         <Loading />
       ) : productsList.length > 0 ? (
         <View>
-          <FlatList onRefresh={refreshProduct} refreshing={isFetching} data={productsList} renderItem={({ item, index }) => <ProductListCard product={item} key={index} />} />
+          <FlatList onRefresh={refresh} refreshing={isFetching} data={productsList} renderItem={({ item, index }) => <ProductListItem product={item} key={index} />} />
         </View>
       ) : (
         <View

@@ -4,7 +4,7 @@ import { collection, getDocs, limit, query } from "firebase/firestore";
 import { db } from "../../../../config/FirebaseConfig";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import PopularProductCard from "../../../elements/Cards/PopularProductCard";
+import PopularProductCard from "../../../elements/Card/PopularProductCard";
 
 const PopularProducts = ({}) => {
   const [productsList, setProductsList] = useState([]);

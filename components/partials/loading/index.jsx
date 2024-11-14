@@ -7,7 +7,7 @@ const Loading = ({ transparent = false }) => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: transparent ? 'white' : 'rgba(0,0,0,0.25)',
+        backgroundColor: transparent ? 'rgba(0,0,0,0.25)' : '',
       }}
     >
       <ActivityIndicator size={"large"} color={Colors.PRIMARY} />

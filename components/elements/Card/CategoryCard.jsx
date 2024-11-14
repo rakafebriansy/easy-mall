@@ -7,8 +7,8 @@ const CategoryCard = ({ category, onCategoryPress, index }) => {
     <TouchableOpacity
       onPress={() => onCategoryPress(category)}
       style={{
-        alignItems: 'center',
-        marginLeft: index === 0 ? 0 : 20
+        alignItems: "center",
+        marginLeft: index === 0 ? 0 : 20,
       }}
     >
       <View

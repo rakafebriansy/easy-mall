@@ -1,23 +1,36 @@
 import { ScrollView, View } from "react-native";
-import Header from "../../components/partials/home/header";
-import Slider from "../../components/partials/home/slider";
-import Category from "../../components/partials/home/category";
-import PopularProducts from "../../components/partials/home/popular-products";
+import CategoryList from "../../components/elements/List/CategoryList";
+import Header from "../../components/partials/home-screen/header";
+import Slider from "../../components/partials/home-screen/slider";
+import PopularProducts from "../../components/partials/home-screen/popular-products";
+import { useRouter } from "expo-router";
 
+const Home = ({}) => {
+  const router = useRouter();
+  const toProductDetail = (product) => router.push(`/product-list/${product.name}`);
 
-const Home = ({  }) => {
-    return (
-        <ScrollView style={{
-            paddingTop: 10
-        }}>
-            <Header />
-            <Slider />
-            <Category />
-            <PopularProducts />
-            <View style={{ 
-                height: 40
-             }} />
-        </ScrollView>
-    );
+  return (
+    <ScrollView
+      style={{
+        paddingTop: 10,
+      }}
+    >
+      <Header />
+      <Slider />
+      <View
+        style={{
+          paddingHorizontal: 20,
+        }}
+      >
+        <CategoryList screen="home" callback={toProductDetail} />
+      </View>
+      <PopularProducts />
+      <View
+        style={{
+          height: 40,
+        }}
+      />
+    </ScrollView>
+  );
 };
 export default Home;
