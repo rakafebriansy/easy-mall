@@ -16,7 +16,7 @@ const PopularProducts = ({}) => {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        setProductsList((prev) => [...prev, doc.data()]);
+        setProductsList((prev) => [...prev, { id: doc.id, ...doc.data() }]);
       });
     } catch (err) {
       console.error(err);
@@ -39,7 +39,7 @@ const PopularProducts = ({}) => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          paddingHorizontal: 20
+          paddingHorizontal: 20,
         }}
       >
         <Text
@@ -67,7 +67,7 @@ const PopularProducts = ({}) => {
           style={{
             flexDirection: "row",
             gap: 20,
-            paddingHorizontal: 20
+            paddingHorizontal: 20,
           }}
         >
           {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (

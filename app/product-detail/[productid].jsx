@@ -10,18 +10,20 @@ import About from "../../components/partials/product-detail/about";
 import { View } from "react-native";
 import Review from "../../components/partials/product-detail/review";
 import ProductReviews from "../../components/partials/product-detail/product-reviews";
+import TopBar from "../../components/partials/product-detail/top-bar";
 
 const ProductDetail = ({}) => {
   const { productid } = useLocalSearchParams();
-  const [productDetail, setProductDetail] = useState();
+  const [productDetail, setProductDetail] = useState({});
   const [isFetching, setIsFecthing] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchProductDetailById = async (productId) => {
     try {
       const docRef = doc(db, "product-list", productId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setProductDetail({id:docSnap.id, ... docSnap.data()});
+        setProductDetail({ id: docSnap.id, ...docSnap.data() });
       } else {
         console.log("No data");
       }
@@ -30,6 +32,10 @@ const ProductDetail = ({}) => {
       console.error(err);
       ToastAndroid.show("Error while fetching product", ToastAndroid.SHORT);
     }
+  };
+
+  const refreshProduct = () => {
+    fetchProductDetailById(productid);
   };
 
   useEffect(() => {
@@ -41,15 +47,18 @@ const ProductDetail = ({}) => {
       {isFetching ? (
         <Loading />
       ) : (
-        <ScrollView>
-          <View>
-            <Intro product={productDetail} />
-            <Actions product={productDetail} />
-            <About product={productDetail} />
-            <Review product={productDetail} />
-            <ProductReviews product={productDetail} />
-          </View>
-        </ScrollView>
+        <View>
+          <TopBar />
+          <ScrollView>
+            <View>
+              <Intro product={productDetail} />
+              <Actions product={productDetail} />
+              <About product={productDetail} />
+              <Review product={productDetail} refreshProduct={refreshProduct} />
+              <ProductReviews product={productDetail} />
+            </View>
+          </ScrollView>
+        </View>
       )}
     </>
   );

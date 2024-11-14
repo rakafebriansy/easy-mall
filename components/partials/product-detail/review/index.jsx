@@ -6,7 +6,7 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../config/FirebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
 
-const Review = ({ product }) => {
+const Review = ({ product, refreshProduct }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const { user } = useUser();
@@ -24,6 +24,7 @@ const Review = ({ product }) => {
         }),
       });
       ToastAndroid.show("Comment Added Successfully", ToastAndroid.LONG);
+      refreshProduct();
     } catch (err) {
       console.error();
       ToastAndroid.show("Error while updating product", ToastAndroid.SHORT);

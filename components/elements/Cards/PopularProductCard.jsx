@@ -1,8 +1,14 @@
 import { Image, Text, View } from "react-native";
 import { Colors } from "../../../constants/Colors";
+import { TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 const PopularProductCard = ({ product, index }) => {
+  
+  const router = useRouter();
+
   return (
-    <View
+    <TouchableOpacity
+    onPress={() => router.push(`/product-detail/${product.id}`)}
       style={{
         alignItems: "center",
         marginLeft: index === 0 ? 20 : 0,
@@ -94,7 +100,7 @@ const PopularProductCard = ({ product, index }) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 export default PopularProductCard;
