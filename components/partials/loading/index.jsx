@@ -1,6 +1,6 @@
 import { ActivityIndicator, Text, View } from "react-native";
 import { Colors } from "../../../constants/Colors";
-const LoadingScreen = ({}) => {
+const Loading = ({}) => {
   return (
     <View
       style={{
@@ -13,4 +13,4 @@ const LoadingScreen = ({}) => {
     </View>
   );
 };
-export default LoadingScreen;
+export default Loading;

@@ -1,8 +1,12 @@
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, TouchableOpacity } from "react-native";
 import { Colors } from "../../../constants/Colors";
+import { useRouter } from "expo-router";
 const ProductListCard = ({ product }) => {
+  const router = useRouter();
+
   return (
-    <View
+    <TouchableOpacity
+    onPress={() => router.push(`/product-detail/${product.id}`)}
       style={{
         padding: 10,
         margin: 10,
@@ -64,7 +68,7 @@ const ProductListCard = ({ product }) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 export default ProductListCard;

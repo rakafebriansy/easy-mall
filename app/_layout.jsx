@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import * as SecureStore from 'expo-secure-store'
 import { Stack } from "expo-router";
 import LoginScreen from "./login";
-import LoadingScreen from "../components/partials/loading-screen";
+import Loading from "../components/partials/loading";
 
 export default function RootLayout() {
   
@@ -46,7 +46,7 @@ export default function RootLayout() {
 
   if(!fontsLoaded) {
     return (
-      <LoadingScreen />
+      <Loading />
     );
   }
 

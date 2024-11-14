@@ -6,21 +6,27 @@ import ProductListCard from "../../components/elements/Cards/ProductListCard";
 import { Colors } from "../../constants/Colors";
 import { ToastAndroid } from "react-native";
 import { db } from "../../config/FirebaseConfig";
-import LoadingScreen from "../../components/partials/loading-screen";
+import Loading from "../../components/partials/loading";
 const ProductListByCategory = ({}) => {
   const navigation = useNavigation();
   const { category } = useLocalSearchParams();
   const [productsList, setProductsList] = useState([]);
   const [isFetching, setIsFecthing] = useState(true);
 
-  const fetchProductList = async () => {
+  const fetchProductListByCategory = async (categoryName) => {
     try {
       setProductsList([]);
-      const q = query(collection(db, "product-list"), where("category", "==", category));
+      const q = query(collection(db, "product-list"), where("category", "==", categoryName));
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        setProductsList((prev) => [...prev, doc.data()]);
+        setProductsList((prev) => [
+          ...prev,
+          {
+            id: doc.id,
+            ...doc.data(),
+          },
+        ]);
       });
       setIsFecthing(false);
     } catch (err) {
@@ -31,21 +37,21 @@ const ProductListByCategory = ({}) => {
 
   const refreshProduct = () => {
     setIsFecthing(true);
-    fetchProductList();
-  }
+    fetchProductListByCategory(category);
+  };
 
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       headerTitle: category,
     });
-    fetchProductList();
+    fetchProductListByCategory(category);
   }, []);
 
   return (
     <>
       {isFetching ? (
-        <LoadingScreen />
+        <Loading />
       ) : productsList.length > 0 ? (
         <View>
           <FlatList onRefresh={refreshProduct} refreshing={isFetching} data={productsList} renderItem={({ item, index }) => <ProductListCard product={item} key={index} />} />
