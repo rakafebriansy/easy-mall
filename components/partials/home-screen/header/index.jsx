@@ -9,7 +9,7 @@ const Header = ({}) => {
   return (
     <View style={{
         padding: 20,
-        paddingTop: 30,
+        paddingTop: 40,
         backgroundColor: Colors.PRIMARY,
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,

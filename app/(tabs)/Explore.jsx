@@ -51,7 +51,7 @@ const Explore = ({}) => {
   return (
     <View
       style={{
-        paddingTop: 40,
+        paddingTop: 20,
       }}
     >
       <FlatList

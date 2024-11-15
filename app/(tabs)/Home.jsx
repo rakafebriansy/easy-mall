@@ -10,11 +10,7 @@ const Home = ({}) => {
   const toProductDetail = (product) => router.push(`/product-list/${product.name}`);
 
   return (
-    <ScrollView
-      style={{
-        paddingTop: 10,
-      }}
-    >
+    <ScrollView>
       <Header />
       <Slider />
       <View
