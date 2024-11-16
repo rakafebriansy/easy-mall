@@ -3,12 +3,11 @@ import { Colors } from "../../../constants/Colors";
 import { TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 const ProductCard = ({ product }) => {
-
-const router = useRouter();
+  const router = useRouter();
 
   return (
     <TouchableOpacity
-    onPress={() => router.push(`/product-detail/${product.id}`)}
+      onPress={() => router.push(`/product-detail/${product.id}`)}
       style={{
         backgroundColor: "white",
         borderBottomRightRadius: 15,

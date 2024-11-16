@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import PopularProductCard from "../../../elements/Card/PopularProductCard";
 import { getRecords } from "../../../../services";
+import NotFound from "../../../elements/Utils/NotFound";
 
 const PopularProducts = ({}) => {
   const [products, setProducts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
-  const fetchProductsList = async () => {
+  const fetchProducts = async () => {
     try {
-      const data = await getRecords('product-list', 10);
+      const data = await getRecords("product-list", 10);
       setProducts(data);
     } catch (err) {
       console.error(err);
@@ -19,7 +21,7 @@ const PopularProducts = ({}) => {
   };
 
   useEffect(() => {
-    fetchProductsList();
+    fetchProducts();
   }, []);
 
   return (
@@ -54,29 +56,42 @@ const PopularProducts = ({}) => {
         </Text>
       </View>
 
-      {products.length > 0 ? (
-        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={products} renderItem={({ item, index }) => <PopularProductCard product={item} key={index} index={index} />} />
-      ) : (
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 20,
-            paddingHorizontal: 20,
-          }}
-        >
-          {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
-            <View
-              key={i}
-              style={{
-                alignItems: "center",
-                width: 220,
-                height: 195,
-                backgroundColor: Colors.FETCHING,
-                borderRadius: 15,
-              }}
+      {!isFetching ? (
+        <>
+          {products.length > 0 ? (
+            <FlatList
+              onRefresh={fetchProducts}
+              refreshing={isFetching}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              data={products}
+              renderItem={({ item, index }) => <PopularProductCard product={item} key={index} index={index} />}
             />
-          ))}
-        </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 20,
+                paddingHorizontal: 20,
+              }}
+            >
+              {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
+                <View
+                  key={i}
+                  style={{
+                    alignItems: "center",
+                    width: 220,
+                    height: 195,
+                    backgroundColor: Colors.FETCHING,
+                    borderRadius: 15,
+                  }}
+                />
+              ))}
+            </View>
+          )}
+        </>
+      ) : (
+        <NotFound />
       )}
     </View>
   );

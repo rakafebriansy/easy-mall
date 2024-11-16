@@ -1,7 +1,8 @@
 import { Image, Text, View, TouchableOpacity } from "react-native";
 import { Colors } from "../../../constants/Colors";
 import { useRouter } from "expo-router";
-const PrimaryProductCard = ({ product }) => {
+
+const ProductListItem = ({ product }) => {
   const router = useRouter();
 
   return (
@@ -81,4 +82,4 @@ const PrimaryProductCard = ({ product }) => {
     </TouchableOpacity>
   );
 };
-export default PrimaryProductCard;
+export default ProductListItem;

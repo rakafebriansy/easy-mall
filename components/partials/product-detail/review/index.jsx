@@ -26,7 +26,7 @@ const Review = ({ product, refresh }) => {
       refresh();
     } catch (err) {
       console.error(err);
-      ToastAndroid.show("Error while updating product", ToastAndroid.SHORT);
+      ToastAndroid.show("Error while updating the product", ToastAndroid.SHORT);
     }
   };
 

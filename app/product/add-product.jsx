@@ -16,7 +16,7 @@ const AddProduct = ({}) => {
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
   const [isFetching, setIsFecthing] = useState(false);
-  const { user } = useUser();
+  const { isLoaded, user } = useUser();
 
   // form
   const [name, setName] = useState("");
@@ -105,10 +105,10 @@ const AddProduct = ({}) => {
       address,
       contact,
       category,
-      username: user.fullName,
+      userName: user.fullName,
       userEmail: user.primaryEmailAddress.emailAddress,
       userImage: user.imageUrl,
-      imageUrl: imageUrl ?? "-",
+      imageUrl: imageUrl ?? null,
     });
   };
 
@@ -182,160 +182,154 @@ const AddProduct = ({}) => {
 
   return (
     <>
-      {isFetching ? (
-        <Loading />
-      ) : (
-        <>
-          {categories.length > 0 && user ? (
-            <View
-              style={{
-                padding: 20,
-                gap: 20,
-              }}
-            >
-              <Text
+      {!isFetching && categories.length > 0 && isLoaded ? (
+        <View
+          style={{
+            padding: 20,
+            gap: 20,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "outfit",
+              fontSize: 20,
+            }}
+          >
+            Fill all details in order to add new product!
+          </Text>
+          <TouchableOpacity onPress={onImagePick}>
+            {image ? (
+              <Image
                 style={{
-                  fontFamily: "outfit",
-                  fontSize: 20,
+                  width: 100,
+                  height: 100,
+                  borderRadius: 15,
                 }}
-              >
-                Fill all details in order to add new product!
-              </Text>
-              <TouchableOpacity onPress={onImagePick}>
-                {image ? (
-                  <Image
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: 15,
-                    }}
-                    source={{
-                      uri: image,
-                    }}
-                  />
-                ) : (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 10,
-                    }}
-                  >
-                    <Image
-                      style={{
-                        width: 100,
-                        height: 100,
-                      }}
-                      source={require("../../assets/images/camera.png")}
-                    />
-                    <Text
-                      style={{
-                        color: Colors.GRAY,
-                        fontSize: 12,
-                      }}
-                    >
-                      // can't upload photo (no billing)
-                    </Text>
-                  </View>
-                )}
-              </TouchableOpacity>
+                source={{
+                  uri: image,
+                }}
+              />
+            ) : (
               <View
                 style={{
+                  flexDirection: "row",
                   gap: 10,
                 }}
               >
-                <TextInput
-                  placeholder="Name"
+                <Image
                   style={{
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: Colors.PRIMARY,
-                    backgroundColor: "white",
+                    width: 100,
+                    height: 100,
                   }}
-                  onChangeText={(value) => setName(value)}
+                  source={require("../../assets/images/camera.png")}
                 />
-                <TextInput
-                  placeholder="Address"
-                  style={{
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: Colors.PRIMARY,
-                    backgroundColor: "white",
-                  }}
-                  onChangeText={(value) => setAddress(value)}
-                />
-                <TextInput
-                  placeholder="Contact"
-                  style={{
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: Colors.PRIMARY,
-                    backgroundColor: "white",
-                  }}
-                  onChangeText={(value) => setContact(value)}
-                />
-                <TextInput
-                  placeholder="Website"
-                  style={{
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: Colors.PRIMARY,
-                    backgroundColor: "white",
-                  }}
-                  onChangeText={(value) => setWebsite(value)}
-                />
-                <TextInput
-                  placeholder="About"
-                  multiline
-                  numberOfLines={3}
-                  style={{
-                    textAlignVertical: "top",
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: Colors.PRIMARY,
-                    backgroundColor: "white",
-                  }}
-                  onChangeText={(value) => setAbout(value)}
-                />
-                <View
-                  style={{
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: Colors.PRIMARY,
-                    backgroundColor: "white",
-                  }}
-                >
-                  <RNPickerSelect onValueChange={(value) => setCategory(value)} items={categories} />
-                </View>
-              </View>
-              <TouchableOpacity
-                style={{
-                  padding: 12,
-                  backgroundColor: Colors.PRIMARY,
-                  borderRadius: 5,
-                }}
-                onPress={onAddNewProduct}
-              >
                 <Text
                   style={{
-                    textAlign: "center",
-                    fontFamily: "outfit-medium",
-                    color: "white",
-                    fontSize: 17,
+                    color: Colors.GRAY,
+                    fontSize: 12,
                   }}
                 >
-                  + Add
+                  // can't upload photo (no billing)
                 </Text>
-              </TouchableOpacity>
+              </View>
+            )}
+          </TouchableOpacity>
+          <View
+            style={{
+              gap: 10,
+            }}
+          >
+            <TextInput
+              placeholder="Name"
+              style={{
+                padding: 10,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Colors.PRIMARY,
+                backgroundColor: "white",
+              }}
+              onChangeText={(value) => setName(value)}
+            />
+            <TextInput
+              placeholder="Address"
+              style={{
+                padding: 10,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Colors.PRIMARY,
+                backgroundColor: "white",
+              }}
+              onChangeText={(value) => setAddress(value)}
+            />
+            <TextInput
+              placeholder="Contact"
+              style={{
+                padding: 10,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Colors.PRIMARY,
+                backgroundColor: "white",
+              }}
+              onChangeText={(value) => setContact(value)}
+            />
+            <TextInput
+              placeholder="Website"
+              style={{
+                padding: 10,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Colors.PRIMARY,
+                backgroundColor: "white",
+              }}
+              onChangeText={(value) => setWebsite(value)}
+            />
+            <TextInput
+              placeholder="About"
+              multiline
+              numberOfLines={3}
+              style={{
+                textAlignVertical: "top",
+                padding: 10,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Colors.PRIMARY,
+                backgroundColor: "white",
+              }}
+              onChangeText={(value) => setAbout(value)}
+            />
+            <View
+              style={{
+                borderWidth: 1,
+                borderRadius: 5,
+                borderColor: Colors.PRIMARY,
+                backgroundColor: "white",
+              }}
+            >
+              <RNPickerSelect onValueChange={(value) => setCategory(value)} items={categories} />
             </View>
-          ) : (
-            <Loading />
-          )}
-        </>
+          </View>
+          <TouchableOpacity
+            style={{
+              padding: 12,
+              backgroundColor: Colors.PRIMARY,
+              borderRadius: 5,
+            }}
+            onPress={onAddNewProduct}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "outfit-medium",
+                color: "white",
+                fontSize: 17,
+              }}
+            >
+              + Add
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <Loading />
       )}
     </>
   );

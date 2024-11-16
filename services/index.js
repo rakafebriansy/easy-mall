@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, limit, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../config/FirebaseConfig";
 
 export const getRecordsByField = async (tableName, fieldName, operator, value) => {
@@ -46,4 +46,9 @@ export const updateRecord = async (tableName, documentId, value) => {
 export const storeRecord = async (tableName, documentId, value) => {
   const docRef = doc(db, tableName, documentId);
   await setDoc(docRef, value);
+};
+
+export const deleteRecord = async (tableName, documentId) => {
+  const docRef = doc(db, tableName, documentId);
+  await deleteDoc(docRef);
 };

@@ -10,11 +10,13 @@ import Review from "../../components/partials/product-detail/review";
 import ProductReviews from "../../components/partials/product-detail/product-reviews";
 import TopBar from "../../components/partials/product-detail/top-bar";
 import { getRecordById } from "../../services";
+import { useUser } from "@clerk/clerk-expo";
 
-const ProductDetail = ({}) => {
+const ProductDetail = ({ }) => {
   const { productid } = useLocalSearchParams();
   const [product, setProduct] = useState({});
   const [isFetching, setIsFecthing] = useState(false);
+  const { isLoaded, user } = useUser();
 
   const fetchProductDetailById = async (productId) => {
     try {
@@ -33,31 +35,27 @@ const ProductDetail = ({}) => {
     }
   };
 
-  const refresh = () => {
-    fetchProductDetailById(productid);
-  };
-
   useEffect(() => {
     fetchProductDetailById(productid);
   }, []);
 
   return (
     <>
-      {isFetching ? (
-        <Loading />
-      ) : (
+      {!isFetching && isLoaded ? (
         <View>
           <TopBar />
           <ScrollView>
             <View>
-              <Intro product={product} />
+              <Intro product={product} user={user} />
               <Actions product={product} />
               <About product={product} />
-              <Review product={product} refresh={refresh} />
+              <Review product={product} refresh={() => fetchProductDetailById(productid)} />
               <ProductReviews product={product} />
             </View>
           </ScrollView>
         </View>
+      ) : (
+        <Loading />
       )}
     </>
   );
