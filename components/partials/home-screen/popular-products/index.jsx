@@ -6,12 +6,12 @@ import PopularProductCard from "../../../elements/Card/PopularProductCard";
 import { getRecords } from "../../../../services";
 
 const PopularProducts = ({}) => {
-  const [productsList, setProductsList] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const fetchProductsList = async () => {
     try {
       const data = await getRecords('product-list', 10);
-      setProductsList(data);
+      setProducts(data);
     } catch (err) {
       console.error(err);
       ToastAndroid.show("Error while fetching list of popular products", ToastAndroid.SHORT);
@@ -54,8 +54,8 @@ const PopularProducts = ({}) => {
         </Text>
       </View>
 
-      {productsList.length > 0 ? (
-        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={productsList} renderItem={({ item, index }) => <PopularProductCard product={item} key={index} index={index} />} />
+      {products.length > 0 ? (
+        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={products} renderItem={({ item, index }) => <PopularProductCard product={item} key={index} index={index} />} />
       ) : (
         <View
           style={{

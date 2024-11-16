@@ -2,7 +2,7 @@ import { Linking, Share, TouchableOpacity } from "react-native";
 import { Image } from "react-native";
 import { FlatList, Text, View } from "react-native";
 const Actions = ({ product }) => {
-  const actionMenu = [
+  const actionMenus = [
     {
       id: 1,
       name: "Call",
@@ -51,7 +51,7 @@ const Actions = ({ product }) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ justifyContent: "space-between", flex: 1 }}
-        data={actionMenu}
+        data={actionMenus}
         renderItem={({ item, index }) => (
           <TouchableOpacity
             key={index}

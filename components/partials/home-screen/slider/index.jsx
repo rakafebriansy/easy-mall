@@ -5,12 +5,12 @@ import { Colors } from "../../../../constants/Colors";
 import { getRecords } from "../../../../services";
 
 const Slider = ({}) => {
-  const [sliderList, setSliderList] = useState([]);
+  const [sliders, setSliders] = useState([]);
 
-  const fetchSliderList = async () => {
+  const fetchSliders = async () => {
     try {
       const data = await getRecords('slider');
-      setSliderList(data);
+      setSliders(data);
     } catch (err) {
       console.err(err);
       ToastAndroid.show("Error while fetching banners!", ToastAndroid.SHORT);
@@ -18,7 +18,7 @@ const Slider = ({}) => {
   };
 
   useEffect(() => {
-    fetchSliderList();
+    fetchSliders();
   }, []);
 
   return (
@@ -32,11 +32,11 @@ const Slider = ({}) => {
       >
         #For you
       </Text>
-      {sliderList.length > 0 ? (
+      {sliders.length > 0 ? (
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={sliderList}
+          data={sliders}
           renderItem={({ item, index }) => (
             <Image
               source={{

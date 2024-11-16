@@ -1,11 +1,21 @@
+import { useRouter } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { FlatList, Image, Text, View } from "react-native";
+
 const Menu = ({}) => {
-  const menuList = [
+
+  const router = useRouter();
+
+  const onMenuClick = (item) => {
+    router.push(item.path);
+  }
+
+  const menus = [
     {
       id: 1,
       name: "Add Product",
       icon: require("../../../../assets/images/add-button.png"),
+      path: "/product/add-product"
     },
     {
       id: 2,
@@ -27,12 +37,13 @@ const Menu = ({}) => {
   return (
     <View>
       <FlatList
-        data={menuList}
+        data={menus}
         numColumns={2}
         columnWrapperStyle= {{ gap: 20 }}
         contentContainerStyle= {{ gap: 20 }}
         renderItem={({ item, index }) => (
           <TouchableOpacity
+            onPress={() => onMenuClick(item)}
             style={{
               flexDirection: "row",
               alignItems: "center",

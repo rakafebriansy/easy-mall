@@ -1,7 +1,5 @@
-import { useUser } from "@clerk/clerk-expo";
 import { Dimensions, Image, Text, View } from "react-native";
-const UserInfo = ({}) => {
-  const { user } = useUser();
+const UserInfo = ({ user }) => {
   const height = Dimensions.get("window").height;
 
   return (

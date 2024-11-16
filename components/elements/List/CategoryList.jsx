@@ -6,12 +6,12 @@ import CategoryCard from "../Card/CategoryCard";
 import { getRecords } from "../../../services";
 
 const Category = ({ screen, callback = () => {} }) => {
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const fetchCategoriesList = async () => {
     try {
       const data = await getRecords('category');
-      setCategoriesList(data);
+      setCategories(data);
     } catch (err) {
       console.error(err);
       ToastAndroid.show("Error while fetching list of categories", ToastAndroid.SHORT);
@@ -55,8 +55,8 @@ const Category = ({ screen, callback = () => {} }) => {
         </View>
       )}
 
-      {categoriesList.length > 0 ? (
-        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={categoriesList} renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={() => callback(item)} />} />
+      {categories.length > 0 ? (
+        <FlatList showsHorizontalScrollIndicator={false} horizontal={true} data={categories} renderItem={({ item, index }) => <CategoryCard key={index} index={index} category={item} onCategoryPress={() => callback(item)} />} />
       ) : (
         <View
           style={{

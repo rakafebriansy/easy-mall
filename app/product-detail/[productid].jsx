@@ -13,21 +13,23 @@ import { getRecordById } from "../../services";
 
 const ProductDetail = ({}) => {
   const { productid } = useLocalSearchParams();
-  const [productDetail, setProductDetail] = useState({});
-  const [isFetching, setIsFecthing] = useState(true);
+  const [product, setProduct] = useState({});
+  const [isFetching, setIsFecthing] = useState(false);
 
   const fetchProductDetailById = async (productId) => {
     try {
+      setIsFecthing(false);
       const data = await getRecordById("product-list", productId);
       if (data) {
-        setProductDetail(data);
+        setProduct(data);
       } else {
         console.info("No data");
       }
-      setIsFecthing(false);
     } catch (err) {
       console.error(err);
       ToastAndroid.show("Error while fetching product", ToastAndroid.SHORT);
+    } finally {
+      setIsFecthing(false);
     }
   };
 
@@ -48,11 +50,11 @@ const ProductDetail = ({}) => {
           <TopBar />
           <ScrollView>
             <View>
-              <Intro product={productDetail} />
-              <Actions product={productDetail} />
-              <About product={productDetail} />
-              <Review product={productDetail} refresh={refresh} />
-              <ProductReviews product={productDetail} />
+              <Intro product={product} />
+              <Actions product={product} />
+              <About product={product} />
+              <Review product={product} refresh={refresh} />
+              <ProductReviews product={product} />
             </View>
           </ScrollView>
         </View>
