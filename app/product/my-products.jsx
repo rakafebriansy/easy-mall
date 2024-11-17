@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dimensions, FlatList, Text, ToastAndroid, View } from "react-native";
 import Loading from "../../components/elements/Utils/Loading";
 import { useUser } from "@clerk/clerk-expo";
 import { getRecordsByField } from "../../services";
-import { useNavigation } from "expo-router";
+import { useFocusEffect, useNavigation } from "expo-router";
 import NotFound from "../../components/elements/Utils/NotFound";
 import ProductListItem from "../../components/elements/ListItem/ProductListItem";
 
@@ -38,6 +38,14 @@ const MyProducts = ({}) => {
     fetchProducts();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchProducts();
+    }, [])
+  );
+
+  console.log(products)
+
   return (
     <>
       {isFetching && isLoaded ? (
@@ -55,7 +63,7 @@ const MyProducts = ({}) => {
                }} onRefresh={fetchProducts} refreshing={isFetching} data={products} renderItem={({ item, index }) => <ProductListItem product={item} key={index} />} />
             </View>
           ) : (
-            <NotFound />
+            <NotFound>No Product Found</NotFound>
           )}
         </>
       )}

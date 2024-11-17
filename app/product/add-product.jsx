@@ -62,7 +62,7 @@ const AddProduct = ({}) => {
 
   const onAddNewProduct = async () => {
     try {
-      setIsFecthing(true);
+      // setIsFecthing(true);
 
       validateProductForm();
 
@@ -82,7 +82,7 @@ const AddProduct = ({}) => {
         ToastAndroid.show("Error while store new product", ToastAndroid.LONG);
       }
     } finally {
-      setIsFecthing(false);
+      // setIsFecthing(false);
     }
   };
 
@@ -248,6 +248,7 @@ const AddProduct = ({}) => {
                 borderColor: Colors.PRIMARY,
                 backgroundColor: "white",
               }}
+              value={name}
               onChangeText={(value) => setName(value)}
             />
             <TextInput
@@ -259,6 +260,7 @@ const AddProduct = ({}) => {
                 borderColor: Colors.PRIMARY,
                 backgroundColor: "white",
               }}
+              value={address}
               onChangeText={(value) => setAddress(value)}
             />
             <TextInput
@@ -270,6 +272,7 @@ const AddProduct = ({}) => {
                 borderColor: Colors.PRIMARY,
                 backgroundColor: "white",
               }}
+              value={contact}
               onChangeText={(value) => setContact(value)}
             />
             <TextInput
@@ -281,6 +284,7 @@ const AddProduct = ({}) => {
                 borderColor: Colors.PRIMARY,
                 backgroundColor: "white",
               }}
+              value={website}
               onChangeText={(value) => setWebsite(value)}
             />
             <TextInput
@@ -295,6 +299,7 @@ const AddProduct = ({}) => {
                 borderColor: Colors.PRIMARY,
                 backgroundColor: "white",
               }}
+              value={about}
               onChangeText={(value) => setAbout(value)}
             />
             <View
@@ -305,7 +310,7 @@ const AddProduct = ({}) => {
                 backgroundColor: "white",
               }}
             >
-              <RNPickerSelect onValueChange={(value) => setCategory(value)} items={categories} />
+              <RNPickerSelect value={category} onValueChange={(value) => setCategory(value)} items={categories} />
             </View>
           </View>
           <TouchableOpacity

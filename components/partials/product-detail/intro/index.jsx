@@ -25,7 +25,7 @@ const Intro = ({ product, user }) => {
   const deleteProduct = async () => {
     try {
       await deleteRecord("product-list", product.id);
-      router.push('/profile');
+      router.back();
       ToastAndroid.show("Product Deleted Successfully", ToastAndroid.LONG);
     } catch (err) {
       console.log(err);
