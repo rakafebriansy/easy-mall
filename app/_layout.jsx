@@ -1,17 +1,31 @@
 import { ClerkProvider, ClerkLoaded, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
-import * as SecureStore from 'expo-secure-store'
+import * as SecureStore from "expo-secure-store";
 import { Stack } from "expo-router";
 import LoginScreen from "./login";
 import Loading from "../components/elements/Utils/Loading";
 
 export default function RootLayout() {
-  
-  const [fontsLoaded] =  useFonts({
+  const [fontsLoaded] = useFonts({
     outfit: require("../assets/fonts/Outfit-Regular.ttf"),
     "outfit-medium": require("../assets/fonts/Outfit-Medium.ttf"),
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
   });
+  const linking = {
+    prefixes: ["https://myapp.com", "myapp://"],
+    config: {
+      screens: {
+        "(tabs)": {
+          screens: {
+            home: "home",
+            profile: "profile",
+            explore: "explore",
+          },
+        },
+        login: "login",
+      },
+    },
+  };
 
   const tokenCache = {
     async getToken(key) {
@@ -44,23 +58,19 @@ export default function RootLayout() {
     throw new Error("Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env");
   }
 
-  if(!fontsLoaded) {
-    return (
-      <Loading />
-    );
+  if (!fontsLoaded) {
+    return <Loading />;
   }
 
   return (
-    <ClerkProvider 
-      tokenCache={tokenCache}
-      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
-    >
+    <ClerkProvider tokenCache={tokenCache} publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <ClerkLoaded>
         <SignedIn>
           <Stack
             screenOptions={{
               headerShown: false,
             }}
+            linking={linking}
           >
             <Stack.Screen name="(tabs)" />
           </Stack>

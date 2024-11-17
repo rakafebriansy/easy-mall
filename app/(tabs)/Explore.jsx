@@ -52,81 +52,75 @@ const Explore = ({}) => {
   }, []);
 
   return (
-    <>
-      {isFetching ? (
-        <Loading />
-      ) : (
-        <View
-          style={{
-            paddingTop: 20,
-          }}
-        >
-          <FlatList
-            contentContainerStyle={{
-              gap: 15,
-              padding: 20,
-            }}
-            showsVerticalScrollIndicator={false}
-            onRefresh={refresh}
-            refreshing={isFetching}
-            data={products}
-            ListHeaderComponent={
-              <>
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: "outfit-bold",
-                      fontSize: 25,
-                    }}
-                  >
-                    Explore More
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 10,
-                      alignItems: "center",
-                      marginTop: 15,
-                      marginBottom: 5,
-                      borderRadius: 10,
-                      backgroundColor: "white",
-                      borderColor: Colors.PRIMARY,
-                      borderWidth: 1,
-                      padding: 10,
-                    }}
-                  >
-                    <Ionicons name="search" size={24} color={Colors.PRIMARY} />
-                    <TextInput
-                      placeholder="Search ..."
-                      style={{
-                        fontFamily: "outfit",
-                        fontSize: 16,
-                        flex: 1,
-                      }}
-                    />
-                  </View>
-                </View>
-                <CategoryList screen="explore" callback={refreshByCategory} />
-              </>
-            }
-            ListEmptyComponent={
-              <View
+    <View
+      style={{
+        paddingTop: 20,
+      }}
+    >
+      <FlatList
+        contentContainerStyle={{
+          gap: 15,
+          padding: 20,
+        }}
+        showsVerticalScrollIndicator={false}
+        onRefresh={refresh}
+        refreshing={isFetching}
+        data={products}
+        ListHeaderComponent={
+          <>
+            <View>
+              <Text
                 style={{
-                  height: (height * 3) / 5,
+                  fontFamily: "outfit-bold",
+                  fontSize: 25,
                 }}
               >
-                <NotFound>No Product Found</NotFound>
+                Explore More
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 10,
+                  alignItems: "center",
+                  marginTop: 15,
+                  marginBottom: 5,
+                  borderRadius: 10,
+                  backgroundColor: "white",
+                  borderColor: Colors.PRIMARY,
+                  borderWidth: 1,
+                  padding: 10,
+                }}
+              >
+                <Ionicons name="search" size={24} color={Colors.PRIMARY} />
+                <TextInput
+                  placeholder="Search ..."
+                  style={{
+                    fontFamily: "outfit",
+                    fontSize: 16,
+                    flex: 1,
+                  }}
+                />
               </View>
-            }
-            renderItem={({ item, index }) => (
-              <View>
-                <ProductCard product={item} key={index} />
-              </View>
-            )}
-          />
-        </View>
-      )}
-    </>
+            </View>
+            <CategoryList screen="explore" callback={refreshByCategory} />
+          </>
+        }
+        ListEmptyComponent={
+          <View
+            style={{
+              height: (height * 3) / 5,
+            }}
+          >
+            <NotFound>No Product Found</NotFound>
+          </View>
+        }
+        renderItem={({ item, index }) => (
+          <View>
+            <ProductCard product={item} key={index} />
+          </View>
+        )}
+      />
+    </View>
   );
 };
 export default Explore;
