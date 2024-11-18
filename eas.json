@@ -17,5 +17,8 @@
       "distribution": "internal"
     },
     "production": {}
+  },
+  "cli": {
+    "version": "13.2.3"
   }
 }

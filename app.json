@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "easy-mall",
+    "name": "Easy Mall",
     "slug": "easy-mall",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.CHANGE_WIFI_STATE",
+        "android.permission.INTERNET"
+      ],
+      "package": "com.rakafebriansy.easymall"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +41,20 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-      ]
+      ],
+      "expo-font",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2fb118ce-6df1-44cd-83fc-51b8963244fd"
+      }
     }
   }
 }
