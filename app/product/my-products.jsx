@@ -44,8 +44,6 @@ const MyProducts = ({}) => {
     }, [])
   );
 
-  console.log(products)
-
   return (
     <>
       {isFetching && isLoaded ? (
