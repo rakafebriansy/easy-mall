@@ -1,11 +1,9 @@
-import { useAuth } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { Alert, Share, TouchableOpacity } from "react-native";
 import { FlatList, Image, Text, View } from "react-native";
 
 const Menu = ({}) => {
 
-  const {signOut} = useAuth();
   const router = useRouter();
 
   const onMenuClick = (item) => {

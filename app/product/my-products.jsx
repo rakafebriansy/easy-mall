@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Dimensions, FlatList, Text, ToastAndroid, View } from "react-native";
 import Loading from "../../components/elements/Utils/Loading";
-import { useUser } from "@clerk/clerk-expo";
 import { getRecordsByField } from "../../services";
 import { useFocusEffect, useNavigation } from "expo-router";
 import NotFound from "../../components/elements/Utils/NotFound";
@@ -9,7 +8,6 @@ import ProductListItem from "../../components/elements/ListItem/ProductListItem"
 
 const MyProducts = ({}) => {
   const navigation = useNavigation();
-  const { isLoaded, user } = useUser();
   const height = Dimensions.get('window').height;
   const [products, setProducts] = useState([]);
   const [isFetching, setIsFetching] = useState(false);

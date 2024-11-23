@@ -8,7 +8,6 @@ import RNPickerSelect from "react-native-picker-select";
 import { getRecords, storeRecord } from "../../services";
 import Loading from "../../components/elements/Utils/Loading";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
-import { useUser } from "@clerk/clerk-expo";
 import ValidationError from "../../errors/ValidationError";
 
 const AddProduct = ({}) => {
@@ -16,7 +15,6 @@ const AddProduct = ({}) => {
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
   const [isFetching, setIsFecthing] = useState(false);
-  const { isLoaded, user } = useUser();
 
   // form
   const [name, setName] = useState("");

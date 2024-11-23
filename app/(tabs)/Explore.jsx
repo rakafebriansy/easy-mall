@@ -6,7 +6,6 @@ import { getRecords, getRecordsByField } from "../../services";
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/elements/Card/ProductCard";
 import NotFound from "../../components/elements/Utils/NotFound";
-import Loading from "../../components/elements/Utils/Loading";
 
 const Explore = ({}) => {
   const [products, setProducts] = useState([]);

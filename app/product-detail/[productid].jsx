@@ -10,13 +10,11 @@ import Review from "../../components/partials/product-detail/review";
 import ProductReviews from "../../components/partials/product-detail/product-reviews";
 import TopBar from "../../components/partials/product-detail/top-bar";
 import { getRecordById } from "../../services";
-import { useUser } from "@clerk/clerk-expo";
 
 const ProductDetail = ({ }) => {
   const { productid } = useLocalSearchParams();
   const [product, setProduct] = useState({});
   const [isFetching, setIsFecthing] = useState(false);
-  const { isLoaded, user } = useUser();
 
   const fetchProductDetailById = async (productId) => {
     try {

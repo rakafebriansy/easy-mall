@@ -1,10 +1,8 @@
-import { useUser } from "@clerk/clerk-expo";
 import { Image, Text, TextInput, View } from "react-native";
 import { Colors } from "../../../../constants/Colors"
 import { Ionicons } from "@expo/vector-icons";
 
 const Header = ({}) => {
-  const { user } = useUser();
 
   return (
     <View style={{

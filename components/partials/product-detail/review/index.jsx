@@ -3,13 +3,11 @@ import { Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-nat
 import { Rating } from "react-native-ratings";
 import { Colors } from "../../../../constants/Colors";
 import { arrayUnion } from "firebase/firestore";
-import { useUser } from "@clerk/clerk-expo";
 import { updateRecord } from "../../../../services";
 
 const Review = ({ product, refresh }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const { user } = useUser();
 
   const onSubmitComment = async () => {
     try {

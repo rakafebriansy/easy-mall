@@ -1,8 +1,6 @@
-import { ClerkProvider, ClerkLoaded, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
 import * as SecureStore from "expo-secure-store";
 import { Stack } from "expo-router";
-import LoginScreen from "./login";
 import Loading from "../components/elements/Utils/Loading";
 
 export default function RootLayout() {
@@ -17,12 +15,12 @@ export default function RootLayout() {
       screens: {
         "(tabs)": {
           screens: {
-            home: "home",
+            home: "", // Sesuaikan dengan path sebenarnya
             profile: "profile",
             explore: "explore",
           },
         },
-        login: "login",
+        login: "login", // Sesuaikan dengan path sebenarnya
       },
     },
   };
@@ -63,22 +61,13 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCache} publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-      <ClerkLoaded>
-        <SignedIn>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-            linking={linking}
-          >
-            <Stack.Screen name="(tabs)" />
-          </Stack>
-        </SignedIn>
-        <SignedOut>
-          <LoginScreen />
-        </SignedOut>
-      </ClerkLoaded>
-    </ClerkProvider>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }} initialRouteName="login"
+    >
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="login" />
+    </Stack>
   );
 }
