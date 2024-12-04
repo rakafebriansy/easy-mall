@@ -10,8 +10,11 @@ import Review from "../../components/partials/product-detail/review";
 import ProductReviews from "../../components/partials/product-detail/product-reviews";
 import TopBar from "../../components/partials/product-detail/top-bar";
 import { getRecordById } from "../../services";
+import { User } from "../../context/User";
+import { useContext } from "react";
 
 const ProductDetail = ({ }) => {
+  const { user } = useContext(User);
   const { productid } = useLocalSearchParams();
   const [product, setProduct] = useState({});
   const [isFetching, setIsFecthing] = useState(false);

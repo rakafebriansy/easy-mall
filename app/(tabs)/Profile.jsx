@@ -3,8 +3,12 @@ import UserInfo from "../../components/partials/profile/user-info";
 import Menu from "../../components/partials/profile/menu";
 import { Colors } from "../../constants/Colors";
 import Loading from "../../components/elements/Utils/Loading";
+import { User } from "../../context/User";
+import { useContext } from "react";
 
 const Profile = ({}) => {
+  const { user } = useContext(User);
+
   return (
     <>
       {user ? (

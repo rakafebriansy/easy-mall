@@ -1,7 +1,7 @@
 import { useFonts } from "expo-font";
-import * as SecureStore from "expo-secure-store";
 import { Stack } from "expo-router";
 import Loading from "../components/elements/Utils/Loading";
+import UserContextProvider from "../context/User";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +20,7 @@ export default function RootLayout() {
             explore: "explore",
           },
         },
-        login: "login/index",
+        login: "login",
       },
     },
   };
@@ -32,13 +32,15 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }} initialRouteName="login"
-    >
-      <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="login/index" />
-    </Stack>
+    <UserContextProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }} initialRouteName="login"
+      >
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="login/index" />
+      </Stack>
+    </UserContextProvider>
   );
 }

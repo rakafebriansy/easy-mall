@@ -5,8 +5,11 @@ import { getRecordsByField } from "../../services";
 import { useFocusEffect, useNavigation } from "expo-router";
 import NotFound from "../../components/elements/Utils/NotFound";
 import ProductListItem from "../../components/elements/ListItem/ProductListItem";
+import { User } from "../../context/User";
+import { useContext } from "react";
 
 const MyProducts = ({}) => {
+  const { user } = useContext(User);
   const navigation = useNavigation();
   const height = Dimensions.get('window').height;
   const [products, setProducts] = useState([]);
@@ -15,7 +18,7 @@ const MyProducts = ({}) => {
   const fetchProducts = async () => {
     try {
       setIsFetching(true);
-      const data = await getRecordsByField("product-list", "userEmail", "==", user.primaryEmailAddress.emailAddress);
+      const data = await getRecordsByField("product-list", "userEmail", "==", user.email);
       setProducts(data);
     } catch (err) {
       console.error(err);

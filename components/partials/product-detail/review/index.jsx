@@ -15,9 +15,9 @@ const Review = ({ product, refresh }) => {
         reviews: arrayUnion({
           rating: rating,
           comment: comment,
-          userName: user.fullName,
-          userImage: user.imageUrl,
-          userEmail: user.primaryEmailAddress.emailAddress,
+          userName: user.name,
+          userImage: user.photo,
+          userEmail: user.email,
         }),
       });
       ToastAndroid.show("Comment Added Successfully", ToastAndroid.LONG);

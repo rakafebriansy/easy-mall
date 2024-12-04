@@ -14,7 +14,7 @@ const UserInfo = ({ user }) => {
     >
       <Image
         source={{
-          uri: user.imageUrl,
+          uri: user.photo,
         }}
         style={{
           width: 100,
@@ -28,7 +28,7 @@ const UserInfo = ({ user }) => {
           fontSize: 20,
         }}
       >
-        {user.fullName}
+        {user.name}
       </Text>
       <Text
         style={{
@@ -36,7 +36,7 @@ const UserInfo = ({ user }) => {
           fontSize: 16,
         }}
       >
-        {user.primaryEmailAddress.emailAddress}
+        {user.email}
       </Text>
     </View>
   );

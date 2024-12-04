@@ -2,7 +2,7 @@ import { Image, Text, TextInput, View } from "react-native";
 import { Colors } from "../../../../constants/Colors"
 import { Ionicons } from "@expo/vector-icons";
 
-const Header = ({}) => {
+const Header = ({ user }) => {
 
   return (
     <View style={{
@@ -19,7 +19,7 @@ const Header = ({}) => {
       }}>
         <Image
           source={{
-            uri: user.imageUrl,
+            uri: user.photo,
           }}
           style={{
             width: 45,
@@ -35,7 +35,7 @@ const Header = ({}) => {
                 fontSize: 19,
                 color: 'white',
                 fontFamily: 'outfit-medium'
-            }}>{user.fullName}</Text>
+            }}>{user.name}</Text>
         </View>
       </View>
       <View style={{

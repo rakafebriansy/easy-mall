@@ -19,3 +19,6 @@ web-build/
 .env
 expo-env.d.ts
 # @end expo-cli
+
+client_secret_923905482587-9fflig9fmp62kfopiff8409rt79kiqkb.apps.googleusercontent.com.json
+client_secret_923905482587-3rmrc7dlng24f4pem3qsmmkc6kjngji6.apps.googleusercontent.com.json

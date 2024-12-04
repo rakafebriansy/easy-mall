@@ -9,8 +9,11 @@ import { getRecords, storeRecord } from "../../services";
 import Loading from "../../components/elements/Utils/Loading";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import ValidationError from "../../errors/ValidationError";
+import { User } from "../../context/User";
+import { useContext } from "react";
 
 const AddProduct = ({}) => {
+  const { user } = useContext(User);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -103,9 +106,9 @@ const AddProduct = ({}) => {
       address,
       contact,
       category,
-      userName: user.fullName,
-      userEmail: user.primaryEmailAddress.emailAddress,
-      userImage: user.imageUrl,
+      userName: user.name,
+      userEmail: user.email,
+      userImage: user.photo,
       imageUrl: imageUrl ?? null,
     });
   };

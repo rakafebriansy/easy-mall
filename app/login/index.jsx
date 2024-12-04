@@ -1,74 +1,33 @@
 import { Image, Text, View, Dimensions, TouchableOpacity, Button, ToastAndroid } from "react-native";
 import { Colors } from "../../constants/Colors";
-import React, { useEffect, useState } from "react";
-import * as WebBrowser from "expo-web-browser";
-import * as Google from "expo-auth-session/providers/google";
+import React, { useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { User } from "../../context/User";
 import { useRouter } from "expo-router";
-import * as AuthSession from "expo-auth-session";
+
+GoogleSignin.configure({
+  webClientId: '923905482587-3rmrc7dlng24f4pem3qsmmkc6kjngji6.apps.googleusercontent.com',
+});
 
 const { width, height } = Dimensions.get("window");
 
-WebBrowser.maybeCompleteAuthSession();
-
 const LoginScreen = ({}) => {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState(null);
-
-  //
-
-  const redirectUri = AuthSession.makeRedirectUri({
-    scheme: "myapp",
-    useProxy: false,
-  });
-
-  console.log(redirectUri);
-  //
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
-    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
-  });
+  const { user, setUser } = useContext(User);
 
   const handleGoogleSignIn = async () => {
     try {
-      const user = await AsyncStorage.getItem("@user");
-      if (!user) {
-        if (response.type === "success") {
-          await getUserInfo(response.authentication.accessToken);
-        }
-      } else {
-        setUserInfo(JSON.parse(user));
-      }
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      await AsyncStorage.setItem("@user", JSON.stringify(userInfo));
+      setUser(userInfo.data.user);
+      router.push('home');
     } catch (error) {
-      console.error(error);
-      ToastAndroid.show("Failed to Login", ToastAndroid.SHORT);
+      console.error(error.message);
+      ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
   };
-
-  const getUserInfo = async (token) => {
-    if (!token) return;
-    try {
-      const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  useEffect(() => {
-    if (response) {
-      handleGoogleSignIn();
-    }
-  }, [response]);
 
   return (
     <View
@@ -121,7 +80,6 @@ const LoginScreen = ({}) => {
           </Text>{" "}
           App
         </Text>
-        <Text>{JSON.stringify(userInfo)}</Text>
         <Text
           style={{
             fontSize: 15,
@@ -135,7 +93,7 @@ const LoginScreen = ({}) => {
         </Text>
       </View>
       <TouchableOpacity
-        onPress={() => promptAsync()}
+        onPress={() => handleGoogleSignIn()}
         style={{
           width: (80 / 100) * width,
           marginTop: 20,
@@ -154,7 +112,6 @@ const LoginScreen = ({}) => {
           Let's Get Started
         </Text>
       </TouchableOpacity>
-      <Button title="delete" onPress={() => AsyncStorage.removeItem("@user")}></Button>
     </View>
   );
 };

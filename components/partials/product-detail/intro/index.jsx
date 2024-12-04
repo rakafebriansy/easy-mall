@@ -76,7 +76,7 @@ const Intro = ({ product, user }) => {
             {product.address}
           </Text>
         </View>
-        {user && user.primaryEmailAddress.emailAddress == product.userEmail && (
+        {user && user.email == product.userEmail && (
           <TouchableOpacity
             style={{
               paddingLeft: 30,
