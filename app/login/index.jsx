@@ -18,10 +18,19 @@ const LoginScreen = ({}) => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      await AsyncStorage.setItem("@user", JSON.stringify(userInfo));
-      setUser(userInfo.data.user);
+      // // with google sign in
+      // await GoogleSignin.hasPlayServices();
+      // const userInfo = await GoogleSignin.signIn();
+      // await AsyncStorage.setItem("@user", JSON.stringify(userInfo));
+      // setUser(userInfo.data.user);
+
+      // bypass
+      setUser({
+        name: 'Test',
+        email: 'user@example.com',
+        photo: 'https://cdn-icons-png.flaticon.com/512/64/64572.png '
+      });
+
       router.push('home');
     } catch (error) {
       console.error(error.message);
